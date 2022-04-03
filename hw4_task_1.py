@@ -87,7 +87,9 @@ def kmeans(data,
     initial_centroids = data[initial_indices, :]
     
     #step 3 of the K-means algorithm
-    distances = cdist(data, initial_centroids, distance_metric)   
+    #scipy's cdist computes the distances between each pair of points in data and initial_centroids
+    distances = cdist(data, initial_centroids, distance_metric)
+    #form K clusters by assigning all points to the closest centroid
     predicted_labels = np.array([np.argmin(i) for i in distances])
     
     #variable initializations before the start of the repeat-until loop of the K-means algorithm
