@@ -56,7 +56,9 @@ algo = KNNBasic(sim_options=sim_options)
 dict_item_pearson = cross_validate(algo, data, measures=['rmse', 'mae'], cv=5, verbose=True)
 print(dict_item_pearson)
 
-plt.title('User based', fontsize=20)
+plt.title('User based CF', fontsize=20)
+plt.xlabel('Iteration of Cross-Validation', fontsize=15)
+plt.ylabel('RMSE', fontsize=15)
 plt.plot(dict_user_cosine['test_rmse'], 'r-')
 plt.text(0, np.max(dict_user_cosine['test_rmse']), 'Cosine', color='red')
 plt.plot(dict_user_msd['test_rmse'], 'g-')
@@ -65,7 +67,9 @@ plt.plot(dict_user_pearson['test_rmse'], 'b-')
 plt.text(0, np.max(dict_user_pearson['test_rmse']), 'Pearson', color='blue')
 plt.show()
 
-plt.title('Item based', fontsize=20)
+plt.title('Item based CF', fontsize=20)
+plt.xlabel('Iteration of Cross-Validation', fontsize=15)
+plt.ylabel('RMSE', fontsize=15)
 plt.plot(dict_item_cosine['test_rmse'], 'r-')
 plt.text(0, np.max(dict_item_cosine['test_rmse']), 'Cosine', color='red')
 plt.plot(dict_item_msd['test_rmse'], 'g-')
@@ -80,8 +84,15 @@ for i in range(1, 101):
     dict_user_msd = cross_validate(algo, data, measures=['rmse'], cv=5, verbose=False)
     test_mean_rmse_list.append(dict_user_msd['test_rmse'].mean())
 test_mean_rmse_array = np.array(test_mean_rmse_list)
-print('Best number of neighbors = %s' % (np.argmin(test_mean_rmse_array)+1))
+plt.title('User based CF', fontsize=20)
+plt.xlabel('Number of Neighbors (K)', fontsize=15)
+plt.ylabel('RMSE', fontsize=15)
 plt.plot(test_mean_rmse_array, '^')
+plt.annotate('Best K = %s' % (np.argmin(test_mean_rmse_array)+1), 
+             xy=(np.argmin(test_mean_rmse_array), np.min(test_mean_rmse_array)),
+             fontsize=15,
+             xytext=(np.argmin(test_mean_rmse_array)-0.1, np.min(test_mean_rmse_array)+0.1),
+             arrowprops = dict(facecolor = 'green'))
 plt.show()
 
 test_mean_rmse_list = []
@@ -91,10 +102,13 @@ for i in range(1, 101):
     dict_item_msd = cross_validate(algo, data, measures=['rmse'], cv=5, verbose=False)
     test_mean_rmse_list.append(dict_item_msd['test_rmse'].mean())
 test_mean_rmse_array = np.array(test_mean_rmse_list)
-print('Best number of neighbors = %s' % (np.argmin(test_mean_rmse_array)+1))
+plt.title('Item based CF', fontsize=20)
+plt.xlabel('Number of Neighbors (K)', fontsize=15)
+plt.ylabel('RMSE', fontsize=15)
 plt.plot(test_mean_rmse_array, '^')
+plt.annotate('Best K = %s' % (np.argmin(test_mean_rmse_array)+1), 
+             xy=(np.argmin(test_mean_rmse_array), np.min(test_mean_rmse_array)),
+             fontsize=15,
+             xytext=(np.argmin(test_mean_rmse_array)-0.1, np.min(test_mean_rmse_array)+0.1),
+             arrowprops = dict(facecolor = 'green'))
 plt.show()
-
-
-
-
