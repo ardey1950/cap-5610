@@ -110,8 +110,3 @@ for row in customers_df.itertuples():
 submission_content_based_detail_desc_df = pd.DataFrame(list(zip(list_customer_id, list_prediction)), columns =['customer_id', 'prediction'])
 submission_content_based_detail_desc_df.to_csv('submission_content_based_detail_desc.csv', encoding='utf-8', index=False)
 submission_content_based_detail_desc_df
-
-
-
-
-
